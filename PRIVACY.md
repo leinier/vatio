@@ -4,41 +4,55 @@ _Last updated: 4 September 2026_
 
 ## Short version
 
-Vatio does not collect any data. There is no server of ours, no analytics and no
-tracking of any kind.
+Vatio does not collect anything about you, and nothing is shared with anyone.
+The macOS app keeps everything on your Mac. The iPhone app needs one thing more
+—a small service that watches your meter while your phone sleeps— and this page
+explains exactly what that service holds and why.
 
-## What the app stores
+## The macOS app
 
-Vatio keeps two things on your Mac, inside the app's sandbox container:
+Everything stays on your Mac, inside the app's sandbox container:
 
 - **Your Shelly session.** When you sign in, Shelly's cloud returns an access
-  token. It is stored locally, readable only by your user account, and is used
-  solely to ask Shelly for your own meter readings. The app never sees your
-  Shelly password: you type it on Shelly's own sign-in page.
-- **Your settings.** The electricity tariff you enter and the alerts you define.
-  These are numbers you type; they never leave your Mac.
+  token. The app never sees your Shelly password: you type it on Shelly's own
+  page. Signing out removes the token.
+- **Your settings.** The electricity tariff and the alerts you define. These are
+  numbers you type; they never leave your Mac.
 
-Signing out removes the stored session.
+The app talks only to the Shelly cloud (`*.shelly.cloud`) over HTTPS, to read
+the devices in your own account.
 
-## Where your data goes
+## The iPhone app
 
-Only to Shelly. The app talks directly to the Shelly cloud
-(`*.shelly.cloud`) over HTTPS to read the consumption of the devices in your own
-account. No other network destination is contacted.
+iOS suspends apps when they are not in front of you, so an app alone cannot
+notice that your power went out. To make those alerts work, a small service runs
+in the cloud and checks your meter every minute.
 
-Your use of Shelly's service is governed by Shelly's own privacy policy.
+For that to be possible, the service stores:
 
-## What we do not do
+- **A Shelly session of its own** (an access token and its refresh token), used
+  only to read the consumption of your devices. It cannot control or reconfigure
+  anything.
+- **The alert thresholds** you configured, to know when to warn you.
+- **A push identifier for your device**, which is what Apple needs to deliver a
+  notification. It says nothing about you and is deleted as soon as Apple
+  reports that the app is no longer installed.
 
-- We do not collect, receive or store any of your data.
-- We do not use analytics, crash reporting or advertising frameworks.
-- We do not share anything with third parties, because we have nothing to share.
+That service does not store your name, your email, your location or your usage
+history. It keeps only the last reading, and only to tell whether something has
+just changed.
 
-## Notifications
+## What we never do
 
-Alerts about power outages or readings crossing your limits are produced on your
-Mac by the app itself and shown by macOS. Nothing is sent anywhere to generate
-them.
+- We do not sell, share or hand over your data to anybody.
+- We do not use analytics, crash reporting, advertising or tracking of any kind.
+- We do not build a profile of you or of your home.
+
+## Removing your data
+
+Sign out in the app and the stored session is deleted, on your device and in the
+watching service. Delete the app and Apple stops delivering notifications; the
+push identifier is then discarded automatically.
 
 ## Contact
 
