@@ -1,17 +1,20 @@
 # Vatio — Privacy Policy
 
-_Last updated: 4 September 2026_
+_Last updated: 5 September 2026_
 
 ## Short version
 
 Vatio does not collect anything about you, and nothing is shared with anyone.
-The macOS app keeps everything on your Mac. The iPhone app needs one thing more
-—a small service that watches your meter while your phone sleeps— and this page
-explains exactly what that service holds and why.
 
-## The macOS app
+By default everything stays on your device. Notifications that arrive while the
+app is closed are the one exception: they need a small service that watches your
+meter while your device sleeps, and this page explains exactly what that service
+holds and why. On iPhone that service is required for notifications to work at
+all; on Mac it is optional and only used if you ask for an alert history.
 
-Everything stays on your Mac, inside the app's sandbox container:
+## On your device
+
+Everything is kept inside the app's own container:
 
 - **Your Shelly session.** When you sign in, Shelly's cloud returns an access
   token. The app never sees your Shelly password: you type it on Shelly's own
@@ -19,28 +22,37 @@ Everything stays on your Mac, inside the app's sandbox container:
 - **Your settings.** The electricity tariff and the alerts you define. These are
   numbers you type; they never leave your Mac.
 
-The app talks only to the Shelly cloud (`*.shelly.cloud`) over HTTPS, to read
-the devices in your own account.
+To show your consumption, the app talks only to the Shelly cloud
+(`*.shelly.cloud`) over HTTPS, reading the devices in your own account. It never
+controls or reconfigures anything.
 
-## The iPhone app
+## The watching service
 
-iOS suspends apps when they are not in front of you, so an app alone cannot
-notice that your power went out. To make those alerts work, a small service runs
-in the cloud and checks your meter every minute.
+A device that is asleep cannot notice that your power went out. iOS suspends
+apps as a matter of course, and a Mac is closed or off much of the time. So a
+small service runs in the cloud and checks your meter once a minute.
 
-For that to be possible, the service stores:
+On iPhone it is what makes notifications possible. On Mac it is optional: the
+app warns you on its own while it is open, and the service only adds a history
+of what happened while the Mac was not.
 
-- **A Shelly session of its own** (an access token and its refresh token), used
-  only to read the consumption of your devices. It cannot control or reconfigure
-  anything.
-- **The alert thresholds** you configured, to know when to warn you.
-- **A push identifier for your device**, which is what Apple needs to deliver a
-  notification. It says nothing about you and is deleted as soon as Apple
-  reports that the app is no longer installed.
+For that, the service stores:
 
-That service does not store your name, your email, your location or your usage
-history. It keeps only the last reading, and only to tell whether something has
-just changed.
+- **A Shelly session** (an access token and its refresh token), used only to
+  read the consumption of your devices.
+- **The alert thresholds** you configured, so it knows when to warn you.
+- **The time zone of your device**, so a warning can say the hour you read on
+  your own clock rather than the server's.
+- **A push identifier**, which is what Apple needs to deliver a notification. It
+  says nothing about you and is discarded as soon as Apple reports the app is no
+  longer installed.
+- **A credential it issues to each of your devices**, so they can read their own
+  alerts and nobody else's. Only a hash of it is kept.
+- **The last hundred warnings it sent you**, which is the alert history you see
+  in the app. Each one holds the reading that triggered it and when.
+
+It does not store your name, your email or your location, and it keeps no record
+of your consumption beyond the last reading and those warnings.
 
 ## What we never do
 
@@ -50,9 +62,23 @@ just changed.
 
 ## Removing your data
 
-Sign out in the app and the stored session is deleted, on your device and in the
-watching service. Delete the app and Apple stops delivering notifications; the
-push identifier is then discarded automatically.
+Sign out in the app. That erases, on the device, your Shelly session and the
+credential the service issued; your tariff and your alert thresholds stay, since
+they are your own work and you will want them if you come back.
+
+It also tells the service to forget that device. When the last of your devices
+signs out, everything belonging to your account is deleted there: the session,
+the thresholds, the warning history and the record of what your meter was doing.
+Nothing is kept for later.
+
+Deleting the app without signing out first leaves that data in the service. If
+that is your case, write to the address below and it will be removed.
+
+## How long it is kept
+
+Only while you use the app. There is no archive: the warning history is capped
+at the last hundred, the readings are overwritten each time, and signing out on
+your last device removes the rest.
 
 ## Contact
 
