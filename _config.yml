@@ -1,0 +1,10 @@
+title: Vatio
+description: Lo que gasta tu casa en electricidad, en la barra de menú
+theme: jekyll-theme-minimal
+# Sin esto la política queda en /PRIVACY.html, que es una URL fea para algo que
+# se enseña a Apple y a los usuarios.
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

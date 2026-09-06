@@ -1,3 +1,8 @@
+---
+title: Privacy Policy
+permalink: /privacy/
+---
+
 # Vatio — Privacy Policy
 
 _Last updated: 5 September 2026_
