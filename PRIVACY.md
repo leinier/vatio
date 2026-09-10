@@ -5,18 +5,25 @@ permalink: /privacy/
 
 # Vatio — Privacy Policy
 
-_Last updated: 8 September 2026_
+_Last updated: 10 September 2026_
 
 ## Short version
 
 Vatio does not collect anything about you, and nothing is shared with anyone.
 
-By default everything stays on your device. There are two exceptions, and this
-page explains both: notifications that arrive while the app is closed need a
-small service that watches your meter while your device sleeps, and on iPhone
-that same service also relays the app's own requests when your network cannot
-reach Shelly. On iPhone the service is required for notifications to work at
-all; on Mac it is optional and only used if you ask for an alert history.
+By default everything stays on your device. There are three exceptions, and this
+page explains all of them: notifications that arrive while the app is closed need
+a small service that watches your meter while your device sleeps; on iPhone that
+same service also relays the app's own requests when your network cannot reach
+Shelly; and your meter can send its readings to us directly, which is the only
+case where we keep a history of your consumption.
+
+If you use Vatio without a Shelly account, the third one is off until you turn
+it on, and the app explains what it means before asking. If you sign in with a
+Shelly account, Vatio sets it up for you the first time you open it at home,
+because in that case your readings already travel to a cloud and this only
+changes which one; the app says on its screen that your meter is sending to
+Vatio, and one button undoes it and erases what was stored.
 
 ## On your device
 
@@ -92,11 +99,51 @@ For that, the service stores, per account:
   reported as a power cut. It holds times and whether the meter answered, never
   readings.
 
-It does not store your name, your email or your location, and it keeps no
-archive of your consumption beyond what is listed above.
+It does not store your name, your email or your location, and beyond what is
+listed above it keeps no archive of your consumption — unless the readings
+described in the next section are turned on, which is the one part of Vatio that
+does.
 
 Notifications are delivered through Apple's Push Notification service, which is
 what carries them to your device.
+
+## Readings sent straight to Vatio
+
+This is the only part of Vatio that keeps a history of what your home consumes.
+It exists because the manufacturer's cloud groups consumption by the hour and
+publishes it late, so the figure for today can run up to an hour behind what
+your meter already knows.
+
+The app configures your own meter — on your own network, and only there — to use
+the outbound connection built into the device, pointing it at our service. With
+a Shelly account that happens by itself the first time you open Vatio at home;
+without one it never happens unless you ask, because that mode promises nothing
+leaves your house and turning this on quietly would make that a lie.
+
+From then on the meter itself sends what it measures, without passing through
+the manufacturer. Your meter has a single such connection: if it was already
+sending somewhere else, the app tells you where and asks before taking it over.
+
+What is stored, per meter:
+
+- **One row per minute**, with the energy each of the three phases used in that
+  minute, and the energy returned to the grid if you generate. This is the
+  history you see in the app, and it is kept for as long as you use it.
+- **The last reading it sent**, which is what the app shows as "now": power,
+  current, voltage, power factor and frequency per phase, and the meter's own
+  temperature.
+- **Daily totals**, brought once from the Shelly cloud when this is set up, so
+  your history does not start on the day it was turned on. Shelly gives day by
+  day up to sixty days back; that is what is taken.
+- **The credential we issued**, which is what your meter sends with every
+  message, and which meter it belongs to.
+
+Nothing else. No name, no email, no address, no location. The service knows a
+meter, its numbers and nothing about who owns it — a meter never heard of your
+Shelly account.
+
+The readings are stored on Cloudflare, each meter in its own store, and are
+never shared, sold or handed to anybody.
 
 ## What we never do
 
@@ -106,23 +153,41 @@ what carries them to your device.
 
 ## Removing your data
 
-Sign out in the app. That erases, on the device, your Shelly session and the
-credential the service issued; your tariff and your alert thresholds stay, since
-they are your own work and you will want them if you come back.
+There are two separate things you can remove, and they are separate on purpose.
 
-It also tells the service to forget that device. When the last of your devices
-signs out, everything belonging to your account is deleted there: the session,
-the settings, the cached readings, the consumption figures, the warning history
-and the record of what your meter was doing. Nothing is kept for later.
+**Signing out** ("Disconnect account") clears that device: your Shelly session
+and the credentials the services issued. Your tariff and your alert thresholds
+stay, since they are your own work and you will want them if you come back. It
+also tells the watching service to forget that device; when the last of your
+devices signs out, everything belonging to your account is deleted there — the
+session, the settings, the cached readings, the consumption figures, the warning
+history and the record of what your meter was doing.
 
-Deleting the app without signing out first leaves that data in the service. If
-that is your case, write to the address below and it will be removed.
+Signing out on one device does **not** delete your consumption history. Many
+people use Vatio on a phone and a computer, and taking the app off one of them
+says nothing about the other: that history belongs to the meter, not to the
+device you happened to press a button on.
+
+**Deleting your data** ("Delete my data from Vatio", in Settings) is the one
+that erases it: every minute stored, every daily total, and the credential. It
+also tells your meter to stop sending, over the same connection it uses to send.
+This reaches every device you use, and the app says so before doing it.
 
 ## How long it is kept
 
-Only while you use the app. There is no archive: the warning history is capped
-at the last hundred, the readings and the consumption figures are overwritten
-each time, and signing out on your last device removes the rest.
+Your consumption history is kept while you are using it, and **deleted after
+ninety days in which no device of yours has read it** — at which point your
+meter is also told to stop sending. Any reading from any of your devices starts
+that clock over, so having the app in two places does not shorten it.
+
+That rule exists because uninstalling an app tells nobody. Neither iOS nor macOS
+notifies a server when you remove an app, so a promise that depended on you
+pressing a button first would be a promise we could not keep. This one does not
+depend on you remembering anything.
+
+Everything else has no archive at all: the warning history is capped at the last
+hundred, the readings and the consumption figures are overwritten each time, and
+signing out on your last device removes the rest.
 
 ## Contact
 
