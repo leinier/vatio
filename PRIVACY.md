@@ -155,13 +155,15 @@ never shared, sold or handed to anybody.
 
 There are two separate things you can remove, and they are separate on purpose.
 
-**Signing out** ("Disconnect account") clears that device: your Shelly session
-and the credentials the services issued. Your tariff and your alert thresholds
-stay, since they are your own work and you will want them if you come back. It
-also tells the watching service to forget that device; when the last of your
-devices signs out, everything belonging to your account is deleted there — the
-session, the settings, the cached readings, the consumption figures, the warning
-history and the record of what your meter was doing.
+**Signing out** ("Disconnect account") clears that device: your Shelly session,
+the credentials the services issued, and your meter's own password and
+certificate — the password is removed from the keychain, one entry per meter.
+Your tariff and your alert thresholds stay, since they are your own work and
+you will want them if you come back. It also tells the watching service to
+forget that device; when the last of your devices signs out, everything
+belonging to your account is deleted there — the session, the settings, the
+cached readings, the consumption figures, the warning history and the record of
+what your meter was doing.
 
 Signing out on one device does **not** delete your consumption history. Many
 people use Vatio on a phone and a computer, and taking the app off one of them
