@@ -32,9 +32,9 @@ Everything is kept inside the app's own container:
 - **Your Shelly session.** When you sign in, Shelly's cloud returns an access
   token. The app never sees your Shelly password: you type it on Shelly's own
   page, in a window the system provides. Signing out removes the token.
-- **Your settings.** The electricity tariff, the day your billing period starts,
-  the names you give each phase and the alerts you define. These are things you
-  type; by themselves they never leave your device.
+- **Your settings.** The electricity tariff, the days your billing period runs
+  between, the names you give each phase and the alerts you define. These are
+  things you type; by themselves they never leave your device.
 
 To show your consumption, the app talks to the Shelly cloud (`*.shelly.cloud`)
 over HTTPS, reading the devices in your own account. It never controls or
@@ -155,15 +155,20 @@ never shared, sold or handed to anybody.
 
 There are two separate things you can remove, and they are separate on purpose.
 
-**Signing out** ("Disconnect account") clears that device: your Shelly session,
-the credentials the services issued, and your meter's own password and
-certificate — the password is removed from the keychain, one entry per meter.
-Your tariff and your alert thresholds stay, since they are your own work and
-you will want them if you come back. It also tells the watching service to
-forget that device; when the last of your devices signs out, everything
-belonging to your account is deleted there — the session, the settings, the
-cached readings, the consumption figures, the warning history and the record of
-what your meter was doing.
+**Signing out** ("Disconnect account") clears that device. It removes your
+Shelly session and the credentials the services issued; everything the app knew
+about each of your meters — its name, its address on your network, the names you
+gave its phases, and its own password and certificate, the password taken out of
+the keychain, one entry per meter; and what the app had stored to show you
+without asking anyone: the warnings kept on that device and the consumption
+totals of billing periods already closed.
+
+Your tariff, the days your billing period runs between and your alert thresholds
+stay, since they are your own work and you will want them if you come back. It
+also tells the watching service to forget that device; when the last of your
+devices signs out, everything belonging to your account is deleted there — the
+session, the settings, the cached readings, the consumption figures, the warning
+history and the record of what your meter was doing.
 
 Signing out on one device does **not** delete your consumption history. Many
 people use Vatio on a phone and a computer, and taking the app off one of them
